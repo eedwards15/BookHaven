@@ -9,6 +9,7 @@ public static class MapperHelper
             Id = book.Id, 
             Title = book.Title,
             Genre = book.Genre,
+            Description = book.Description,
             Author = book.Author,
             CoverImage = book.CoverImage
         };
@@ -22,6 +23,7 @@ public static class MapperHelper
             Title = dtoBook.Title,
             Genre = dtoBook.Genre,
             Author = dtoBook.Author,
+            Description = dtoBook.Description,
             CoverImage = dtoBook.CoverImage
         };
     }
