@@ -2,3 +2,5 @@
 BookHaven.API/bin/
 
 BookHaven.API/obj/
+
+appsettings.Local.json
