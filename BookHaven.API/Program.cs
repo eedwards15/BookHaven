@@ -4,6 +4,8 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using BookHaven.API.Core.Interfaces;
 using BookHaven.API.Apis.LoggingSystems;
 using RabbitMQ.Client;
+using BookHaven.API.Core.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,12 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//Update for better security
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 
 builder.Services.AddScoped<iLog, RabbitMq>();
 
@@ -37,7 +45,7 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Local
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllers();

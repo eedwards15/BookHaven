@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using BookHaven.API.Database;
 using BookHaven.API.Core.Interfaces;
 using BookHaven.API.Core.Models;
-
+using System.Linq;
 
 namespace BookHaven.API.Controllers
 {
@@ -20,8 +20,27 @@ namespace BookHaven.API.Controllers
         }
 
 
+
+        [HttpGet("{booktitle}")]
+        public ActionResult<List<DtoBook>> GetItemsByTitle(string booktitle)
+        {
+            try
+            {
+                var dbBooks = _context.Books.Where(b => b.Title.Contains(booktitle)).Take(10).ToList();
+                var dtoBooks = MapperHelper.MapToDtoList(dbBooks);
+                return Ok(dtoBooks);
+            }
+            catch (Exception ex)
+            {
+                _log.Log(new DtoLog { Message = ex.Message, SourceSystem = "BookHaven.API", Timestamp = DateTime.Now, DateLogged = DateTime.Now });
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+
         [HttpGet("{page}/{count}")]
-        public ActionResult<object> GetItemsPaged(int page, int count)
+        public ActionResult<List<DtoBook>> GetItemsPaged(int page, int count)
         {
             try
             {
@@ -36,6 +55,9 @@ namespace BookHaven.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+
+
 
     }
 }

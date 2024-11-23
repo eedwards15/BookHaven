@@ -1,5 +1,5 @@
 
-namespace BookHaven.API.Core.models;
+namespace BookHaven.API.Core.Models;
 public class DtoBook
 {
     public int Id { get; set; }

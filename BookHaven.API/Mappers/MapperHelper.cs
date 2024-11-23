@@ -1,4 +1,4 @@
-using BookHaven.API.Core.models;
+using BookHaven.API.Core.Models;
 using BookHaven.API.Database;
 
 public static class MapperHelper

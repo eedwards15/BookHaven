@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 using BookHaven.API.Core.Interfaces;
+using Microsoft.Extensions.Options;
 
 
 namespace BookHaven.API.Apis.LoggingSystems;
