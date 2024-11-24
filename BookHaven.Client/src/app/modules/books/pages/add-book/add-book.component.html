@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-header text-center">
+                <h5 class="card-title">Add Book</h5>
+            </div>
+            <div class="card-body">  
+                <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                      <label for="title">Title</label>
+                      <input 
+                        type="text" 
+                        id="title"
+                        formControlName="title"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': hasError('title', 'required') || hasError('title', 'maxlength')}">
+                      <div class="invalid-feedback" *ngIf="hasError('title', 'required')">
+                        Title is required
+                      </div>
+                      <div class="invalid-feedback" *ngIf="hasError('title', 'maxlength')">
+                        Title must be less than 100 characters
+                      </div>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="author">Author</label>
+                      <input 
+                        type="text" 
+                        id="author"
+                        formControlName="author"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': hasError('author', 'required') || hasError('author', 'maxlength')}">
+                      <div class="invalid-feedback" *ngIf="hasError('author', 'required')">
+                        Author is required
+                      </div>
+                      <div class="invalid-feedback" *ngIf="hasError('author', 'maxlength')">
+                        Author must be less than 100 characters
+                      </div>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <textarea 
+                        id="description"
+                        formControlName="description"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': hasError('description', 'required') || hasError('description', 'maxlength')}">
+                      </textarea>
+                      <div class="invalid-feedback" *ngIf="hasError('description', 'required')">
+                        Description is required
+                      </div>
+                      <div class="invalid-feedback" *ngIf="hasError('description', 'maxlength')">
+                        Description must be less than 500 characters
+                      </div>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="genre">Genre</label>
+                      <select 
+                        id="genre"
+                        formControlName="genre"
+                        class="form-control"
+                        [ngClass]="{'is-invalid': hasError('genre', 'required')}">
+                        <option value="">Select a genre</option>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="action">Action</option>
+                      </select>
+                      <div class="invalid-feedback" *ngIf="hasError('genre', 'required')">
+                        Genre is required
+                      </div>
+                    </div>
+                                    
+                    <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="!bookForm.valid">
+                      Add Book
+                    </button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>

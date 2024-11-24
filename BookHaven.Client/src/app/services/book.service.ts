@@ -18,9 +18,16 @@ export class BookService {
   }
 
   getBooksByTitle(title: string): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiUrl}/${title}`);
+    let body = {
+      booktitle: title
+    };
+
+    return this.http.post<Book[]>(`${this.apiUrl}/search`, body, { headers: { 'Content-Type': 'application/json' } });
   }
 
+  addBook(book: Book): Observable<Book> {
+    return this.http.post<Book>(`${this.apiUrl}`, book, { headers: { 'Content-Type': 'application/json' } });
+  }
 
   
 }
