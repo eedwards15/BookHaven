@@ -44,4 +44,8 @@ export class SearchComponent {
     this.router.navigate(['/books/new']);
   }
 
+  navigateToBookDetails(id: number) {
+    this.router.navigate([`/books/${id}`]);
+  }
+
 }

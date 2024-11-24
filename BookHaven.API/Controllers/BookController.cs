@@ -30,7 +30,7 @@ namespace BookHaven.API.Controllers
             try
             {
                 request.SanitizeObject();
-                var dbBooks = _context.Books.Where(b => b.Title.Contains(sanitizedInput)).Take(10).ToList();
+                var dbBooks = _context.Books.Where(b => b.Title.Contains(request.BookTitle)).Take(10).ToList();
                 var dtoBooks = MapperHelper.MapToDtoList(dbBooks);
                 return Ok(dtoBooks);
             }
@@ -68,6 +68,55 @@ namespace BookHaven.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<DtoBook> GetBookById(int id)
+        {
+            try
+            {
+                var dbBook = _context.Books.FirstOrDefault(b => b.Id == id);
+                if (dbBook == null)
+                {
+                    return NotFound();
+                }
+                var dtoBook = MapperHelper.MapToDto(dbBook);
+                return Ok(dtoBook);
+            }
+            catch (Exception ex)
+            {
+                _log.Log(new DtoLog { Message = ex.Message, SourceSystem = "BookHaven.API", Timestamp = DateTime.Now, DateLogged = DateTime.Now });
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
+        [HttpPut("{id}")]
+        public ActionResult<DtoBook> UpdateBook(int id, [FromBody] DtoBook book)
+        {
+            try
+            {
+                book.SanitizeObject();
+                var dbBook = _context.Books.FirstOrDefault(b => b.Id == id);
+                if (dbBook == null)
+                {
+                    return NotFound();
+                }
+                dbBook.Title = book.Title;
+                dbBook.Author = book.Author;
+                dbBook.Genre = book.Genre;
+                dbBook.Description = book.Description;
+                
+                _context.SaveChanges();
+                return Ok(MapperHelper.MapToDto(dbBook));
+            }
+            catch (Exception ex)
+            {
+                _log.Log(new DtoLog { Message = ex.Message, SourceSystem = "BookHaven.API", Timestamp = DateTime.Now, DateLogged = DateTime.Now });
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
 
         [HttpGet("{page}/{count}")]
         public ActionResult<List<DtoBook>> GetItemsPaged(int page, int count)

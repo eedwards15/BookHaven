@@ -28,7 +28,6 @@ public static class MapperHelper
         };
     }
 
-
     public static List<DtoBook> MapToDtoList(List<Book> books)
     {
         return books.Select(MapToDto).ToList();
