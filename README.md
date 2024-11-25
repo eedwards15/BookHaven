@@ -17,11 +17,17 @@ Search Controller:
 - [ ] Add more search parameters
 - [ ] Add sorting
 - [ ] Add pagination
+- [ ] rework search endpoint
+
 
 
 
 ## Change Notes
 ### 1.0.2 [Nov 24 2024]
+- Added description to the API.
+- Added Edit Book Details page.
+- Added Edit Book component.
+- Added Update Book method to the API.
 
 
 
